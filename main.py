@@ -1,6 +1,6 @@
 # ch 4.2.1 main.py
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox)
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox, QPlainTextEdit)
 from PyQt5.QtGui import QIcon
 
 class Calculator(QWidget):
@@ -9,23 +9,27 @@ class Calculator(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.btn1 = QPushButton('Message', self)
-        self.btn1.clicked.connect(self.activateMessage)
+        self.te1 = QPlainTextEdit() # 텍스트 에디트 위젯 생성
+        self.te1.setReadOnly(True) # 읽기 전용 설정
 
-        vbox = QVBoxLayout()
-        vbox.addStretch(1)
-        vbox.addWidget(self.btn1)
-        vbox.addStretch(1)
+        self.btn1 = QPushButton('Message', self) # 버튼 추가
+        self.btn1.clicked.connect(self.activateMessage) # 버튼 클릭 시 activateMessage 메소드 호출
 
-        self.setLayout(vbox)
+        vbox = QVBoxLayout() # 수직 박스 레이아웃
+        vbox.addWidget(self.te1) # 텍스트 에디트 위치
+        vbox.addWidget(self.btn1) # 버튼 위치
+        vbox.addStretch(1) # 빈 공간
 
-        self.setWindowTitle('Calculator')
-        self.setWindowIcon(QIcon('icon.png'))
+        self.setLayout(vbox) # 위대로 레이아웃 설정
+
+        self.setWindowTitle('Calculator') 
+        self.setWindowIcon(QIcon('icon.png')) # 아이콘 추가
         self.resize(256, 256)
         self.show()
     
-    def activateMessage(self):
-        QMessageBox.information(self, 'Information', 'Button clicked!')
+    def activateMessage(self): # 버튼 클릭 시 호출되는 메소드 : 텍스트 에디트에 메시지 출력
+        # QMessageBox.information(self, 'Information', 'Button clicked!') # 메시지 박스
+        self.te1.appendPlainText('Button clicked!')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
