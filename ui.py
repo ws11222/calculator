@@ -1,41 +1,38 @@
-# ch 5.4.1 ui.py
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox, QPlainTextEdit, QHBoxLayout, QLabel) # QLable 추가
+# ch 5.2.1 ui.py
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox, QPlainTextEdit, QHBoxLayout)
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QDate, Qt # 날짜와 주요 속성값 사용을 위해 추가
 
 class View(QWidget):
     def __init__(self):
         super().__init__()
-        self.date = QDate.currentDate() # 현재 날짜를 저장하기 위해 추가
         self.initUI()
 
     def initUI(self):
-        self.lbl1 = QLabel(self.date.toString(Qt.DefaultLocaleLongDate), self) # 추가
-        self.te1 = QPlainTextEdit() 
-        self.te1.setReadOnly(True) 
+        self.te1 = QPlainTextEdit() # 텍스트 에디트 위젯 생성
+        self.te1.setReadOnly(True) # 읽기 전용 설정
 
-        self.btn1 = QPushButton('Message', self) 
-        self.btn2 = QPushButton('Clear', self) 
+        self.btn1 = QPushButton('Message', self) # 버튼 추가
+        self.btn2 = QPushButton('Clear', self) # 버튼2 추가
 
-        hbox = QHBoxLayout() 
-        hbox.addStretch(1) 
-        hbox.addWidget(self.btn1) 
-        hbox.addWidget(self.btn2) 
+        hbox = QHBoxLayout() # 수평 박스 레이아웃
+        hbox.addStretch(1) # 빈 공간
+        hbox.addWidget(self.btn1) # 버튼 1 위치
+        hbox.addWidget(self.btn2) # 버튼 2 위치
 
-        vbox = QVBoxLayout()
-        vbox.addWidget(self.te1) 
-        vbox.addLayout(hbox) 
-        vbox.addWidget(self.lbl1) # 수정
+        vbox = QVBoxLayout() # 수직 박스 레이아웃
+        vbox.addWidget(self.te1) # 텍스트 에디트 위치
+        vbox.addLayout(hbox) # 버튼1 위치에 수평 박스 레이아웃 추가
+        vbox.addStretch(1) # 빈 공간
 
-        self.setLayout(vbox) 
+        self.setLayout(vbox) # 위대로 레이아웃 설정
 
         self.setWindowTitle('Calculator') 
-        self.setWindowIcon(QIcon('icon.png')) 
+        self.setWindowIcon(QIcon('icon.png')) # 아이콘 추가
         self.resize(256, 256)
         self.show()
     
-    def activateMessage(self): 
+    def activateMessage(self): # 버튼 클릭 시 호출되는 메소드 : 텍스트 에디트에 메시지 출력
         self.te1.appendPlainText('Button clicked!')
     
-    def clearMessage(self): 
+    def clearMessage(self): # 버튼 클릭 시 호출되는 메소드 : 텍스트 에디트 내용 삭제
         self.te1.clear()
